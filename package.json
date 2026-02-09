@@ -31,7 +31,7 @@
     "vue-input-otp": "^0.3.2",
     "vue-router": "^5.0.1",
     "vue-sonner": "^2.0.9",
-    "zod": "^4.3.6"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@iconify-json/radix-icons": "^1.2.6",

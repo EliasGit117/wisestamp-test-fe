@@ -9,8 +9,8 @@ export interface ICreateSignatureRequestDto {
 
 
 export const createSignatureSchema = z.object({
-  templateId: z.enum(SignatureTemplateId),
-  email: z.email('Invalid email'),
+  templateId: z.nativeEnum(SignatureTemplateId),
+  email: z.string().email('Invalid email'),
   fullName: z.string().min(1, 'Full name is required'),
   phone: z.string().min(1, 'Phone is required'),
 });
