@@ -35,6 +35,6 @@ export function normalizeError(error: unknown | undefined | null) {
 
 
 export const apiClient =  ky.create({
-  prefixUrl: import.meta.env.API_URL ?? "http://localhost:3000",
+  prefixUrl: import.meta.env.VITE_API_URL ?? "http://localhost:3000",
   credentials: 'include'
 });
