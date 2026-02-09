@@ -16,6 +16,6 @@ export interface IUserDto {
   lastName: string;
   role: UserRole;
   status: UserStatus;
-  created: string;
-  updated: string;
+  createdAt: string;
+  updatedAt: string;
 }

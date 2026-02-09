@@ -6,6 +6,6 @@ export interface ISignatureDto {
   userId: number;
   templateId: SignatureTemplateId;
   payload: Record<string, string>;
-  created: string;
-  updated: string;
+  createdAt: string;
+  updatedAt: string;
 }

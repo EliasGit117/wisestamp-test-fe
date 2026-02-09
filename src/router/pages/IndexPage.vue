@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Icon } from '@iconify/vue';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRoute, useRouter } from 'vue-router';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { toTypedSchema } from '@vee-validate/zod';
 import { createSignatureSchema } from '@/api/signatures/types/create-signature-request-dto';
 import { useForm } from 'vee-validate';
@@ -20,8 +20,10 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem,
+  SelectItem
 } from '@/components/ui/select';
+import SignatureDetailsSheet from '@/router/pages/-components/SignatureDetailsSheet.vue';
+
 
 const route = useRoute();
 const router = useRouter();
@@ -47,7 +49,7 @@ const form = useForm({
     fullName: '',
     email: '',
     phone: ''
-  },
+  }
 });
 
 const { mutate: createSignature, isPending: isCreatingSignature } = useMutation({
@@ -63,7 +65,7 @@ const { mutate: createSignature, isPending: isCreatingSignature } = useMutation(
     toast.success('Signature created successfully!');
     queryClient.invalidateQueries({ queryKey: signaturesService.list.queryKey(search.value) });
     form.resetForm();
-  },
+  }
 });
 
 function setPage(page: number) {
@@ -77,6 +79,8 @@ function setLimit(limit: number) {
 const onSubmit = form.handleSubmit((values) => {
   createSignature(values);
 });
+
+const selectedId = ref<number | undefined>(undefined);
 
 </script>
 
@@ -120,18 +124,18 @@ const onSubmit = form.handleSubmit((values) => {
 
                 <div class="flex sm:flex-col gap-1">
                   <b>Created:</b>
-                  <p>{{ new Date(signature.created).toLocaleDateString() }}</p>
+                  <p>{{ new Date(signature.createdAt).toLocaleDateString() }}</p>
                 </div>
 
                 <div class="flex sm:flex-col gap-1">
                   <b>Updated:</b>
-                  <p>{{ new Date(signature.updated).toLocaleDateString() }}</p>
+                  <p>{{ new Date(signature.updatedAt).toLocaleDateString() }}</p>
                 </div>
               </CardDescription>
             </CardHeader>
 
             <CardFooter class="flex gap-2 ml-auto mb-auto">
-              <Button variant="outline" size="sm" class="ml-auto">
+              <Button variant="outline" size="sm" class="ml-auto" @click="selectedId = signature.id">
                 <Icon icon="radix-icons:info-circled"/>
                 <span>Details</span>
               </Button>
@@ -176,7 +180,7 @@ const onSubmit = form.handleSubmit((values) => {
                       </Select>
                     </FormControl>
 
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 </FormField>
 
@@ -187,7 +191,7 @@ const onSubmit = form.handleSubmit((values) => {
                     <FormControl>
                       <Input placeholder="John Doe" v-bind="componentField"/>
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 </FormField>
 
@@ -202,7 +206,7 @@ const onSubmit = form.handleSubmit((values) => {
                           v-bind="componentField"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 </FormField>
 
@@ -216,7 +220,7 @@ const onSubmit = form.handleSubmit((values) => {
                           v-bind="componentField"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 </FormField>
 
@@ -225,7 +229,7 @@ const onSubmit = form.handleSubmit((values) => {
                       type="submit"
                       :disabled="form.isSubmitting.value"
                   >
-                    <Icon icon="radix-icons:check" />
+                    <Icon icon="radix-icons:check"/>
                     <span>Submit</span>
                   </Button>
                 </CardFooter>
@@ -235,6 +239,8 @@ const onSubmit = form.handleSubmit((values) => {
         </Card>
       </div>
     </div>
+
+    <SignatureDetailsSheet v-model:id="selectedId"/>
 
     <div v-if="data" class="flex flex-col sm:flex-row gap-4 items-center justify-between pt-4 mt-auto">
       <p class="text-sm text-muted-foreground ml-1">

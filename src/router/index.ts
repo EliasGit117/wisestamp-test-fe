@@ -5,9 +5,9 @@ import DefaultLayout from '@/router/layouts/DefaultLayout.vue';
 import AuthorizedLayout from '@/router/layouts/AuthorizedLayout.vue';
 
 import IndexPage from '@/router/pages/IndexPage.vue';
-import DashboardIndexPage from '@/router/pages/dashboard/DashboardIndexPage.vue';
 import AuthSignInPage from '@/router/pages/auth/AuthSignInPage.vue';
 import AuthSignUpPage from '@/router/pages/auth/AuthSignUpPage.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,11 +38,6 @@ const router = createRouter({
           path: '',
           name: 'home',
           component: IndexPage
-        },
-        {
-          path: 'dashboard',
-          name: 'dashboard',
-          component: DashboardIndexPage
         }
       ]
     }

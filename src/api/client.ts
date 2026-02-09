@@ -34,8 +34,7 @@ export function normalizeError(error: unknown | undefined | null) {
 }
 
 
-
 export const apiClient =  ky.create({
-  prefixUrl: "http://localhost:3000",
+  prefixUrl: import.meta.env.API_URL ?? "http://localhost:3000",
   credentials: 'include'
 });
